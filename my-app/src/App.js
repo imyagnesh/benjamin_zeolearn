@@ -1,6 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import abc from "./test";
+import { a, b, c } from "./test";
+import * as xyz from "./test";
+
+console.log(abc);
+
+console.log(xyz.a);
+console.log(xyz.b);
+console.log(xyz.c);
+
+console.log(a);
+console.log(b);
+console.log(c);
 
 function App() {
   return (
