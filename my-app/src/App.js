@@ -1,39 +1,33 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import abc from "./test";
-import { a, b, c } from "./test";
-import * as xyz from "./test";
+import React, { Component } from "react";
+import Child from "./test";
 
-console.log(abc);
+export default class App extends Component {
+  state = {
+    label: "",
+    user: {
+      name: {
+        firstName: "yagnesh",
+        lastName: "modi"
+      }
+    }
+  };
 
-console.log(xyz.a);
-console.log(xyz.b);
-console.log(xyz.c);
+  click = () => {
+    let { user } = this.state;
+    user = { ...user, name: { ...user.name, lastName: "modh" } };
+    console.log(user);
+    this.setState({ user: user });
+  };
 
-console.log(a);
-console.log(b);
-console.log(c);
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  render() {
+    console.log("render parent");
+    const { label, user } = this.state;
+    return (
+      <div>
+        <h1>Hello from Parent</h1>
+        <button onClick={this.click}>Click Parent</button>
+        <Child text="Hello From Props" label={label} user={user} />
+      </div>
+    );
+  }
 }
-
-export default App;
