@@ -4,27 +4,37 @@
 
 // export default a;
 
-import React, { PureComponent } from "react";
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 
 export default class test extends PureComponent {
+  static propTypes = {
+    label: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+    user: PropTypes.object.isRequired,
+  };
+
   state = {
-    title: "Title"
+    title: 'Title',
   };
 
   click = () => {
-    this.setState({ title: "Title1" });
+    this.setState({ title: 'Title1' });
   };
 
   render() {
-    console.log("render child");
+    console.log('render child');
     const { label, text, user } = this.props;
+    const { title } = this.state;
     return (
       <div>
-        <h1>{this.state.title}</h1>
+        <h1>{title}</h1>
         <h2>{label}</h2>
         <h3>{text}</h3>
         <span>{`${user.name.firstName} ${user.name.lastName}`}</span>
-        <button onClick={this.click}>Click Me</button>
+        <button type="button" onClick={this.click}>
+          Click Me
+        </button>
       </div>
     );
   }

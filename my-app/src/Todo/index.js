@@ -4,6 +4,8 @@ import TodoList from './todoList';
 import TodoStatus from './todoStatus';
 
 class index extends Component {
+  state = {};
+
   render() {
     return (
       <div>
