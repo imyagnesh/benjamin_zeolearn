@@ -11,17 +11,20 @@ class index extends Component {
   state = {
     todoText: '',
     todos: [],
+    status: 'all',
   };
 
   onChange = event => {
     this.setState({ todoText: event.target.value });
   };
 
-  addTodo = () => {
+  addTodo = e => {
+    e.preventDefault();
     const { todoText, todos } = this.state;
     this.setState({
       todos: [{ id: todos.length, text: todoText, isDone: false }, ...todos],
       todoText: '',
+      status: 'all',
     });
   };
 
@@ -51,7 +54,15 @@ class index extends Component {
   };
 
   render() {
-    const { todoText, todos } = this.state;
+    const { todoText, todos, status } = this.state;
+    let filteredTodos = todos;
+    if (status === 'pending') {
+      filteredTodos = todos.filter(x => x.isDone === false);
+    }
+    if (status === 'completed') {
+      filteredTodos = todos.filter(x => x.isDone === true);
+    }
+
     return (
       <div
         style={{
@@ -65,14 +76,14 @@ class index extends Component {
         <TodoForm value={todoText} onChange={this.onChange} addTodo={this.addTodo} />
         <div style={{ flex: 1, width: '100%' }}>
           <TodoList
-            todos={todos}
+            todos={filteredTodos}
             onDelete={this.onDelete}
             onComplete={this.onComplete}
             onUpdate={this.onUpdate}
           />
         </div>
         <div style={{ width: '100%', display: 'flex' }}>
-          <TodoStatus />
+          <TodoStatus onStatusChange={sts => this.setState({ status: sts })} />
         </div>
       </div>
     );

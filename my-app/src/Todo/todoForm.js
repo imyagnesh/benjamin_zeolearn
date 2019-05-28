@@ -3,12 +3,16 @@ import PropTypes from 'prop-types';
 
 const todoForm = ({ value, onChange, addTodo }) => {
   return (
-    <div>
-      <input type="text" placeholder="Write your todo here" value={value} onChange={onChange} />
-      <button type="button" onClick={addTodo}>
-        Add Todo
-      </button>
-    </div>
+    <form onSubmit={addTodo}>
+      <input
+        type="text"
+        placeholder="Write your todo here"
+        value={value}
+        onChange={onChange}
+        required
+      />
+      <button type="submit">Add Todo</button>
+    </form>
   );
 };
 
