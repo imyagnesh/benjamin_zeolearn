@@ -14,35 +14,67 @@ class index extends Component {
     status: 'all',
   };
 
+  componentDidMount() {
+    this.fetchApi();
+  }
+
+  fetchApi = async () => {
+    const res = await fetch('http://localhost:3004/todo');
+    const todos = await res.json();
+    this.setState({ todos });
+  };
+
   onChange = event => {
     this.setState({ todoText: event.target.value });
   };
 
-  addTodo = e => {
+  addTodo = async e => {
     e.preventDefault();
     const { todoText, todos } = this.state;
+    const newTodo = { text: todoText, isDone: false };
+    const res = await fetch('http://localhost:3004/todo', {
+      method: 'POST',
+      body: JSON.stringify(newTodo),
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+    const todo = await res.json();
     this.setState({
-      todos: [{ id: todos.length, text: todoText, isDone: false }, ...todos],
+      todos: [todo, ...todos],
       todoText: '',
       status: 'all',
     });
   };
 
-  onDelete = todo => {
+  onDelete = async todo => {
     const { todos } = this.state;
+    await fetch(`http://localhost:3004/todo/${todo.id}`, {
+      method: 'DELETE',
+    });
     this.setState({
       todos: todos.filter(x => x.id !== todo.id),
     });
   };
 
-  onComplete = todo => {
+  onComplete = async todo => {
     const { todos } = this.state;
     const i = todos.findIndex(x => x.id === todo.id);
-    const updatedTodos = [
-      ...todos.slice(0, i),
-      { ...todo, isDone: !todo.isDone },
-      ...todos.slice(i + 1),
-    ];
+
+    const updatedTodo = { ...todo, isDone: !todo.isDone };
+
+    const res = await fetch(`http://localhost:3004/todo/${todo.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(updatedTodo),
+      headers: {
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+    const newTodo = await res.json();
+
+    const updatedTodos = [...todos.slice(0, i), newTodo, ...todos.slice(i + 1)];
     this.setState({ todos: updatedTodos });
   };
 
