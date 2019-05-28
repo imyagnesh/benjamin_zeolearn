@@ -26,6 +26,8 @@
   "javascript.format.enable": false,
   "prettier.eslintIntegration": true,
   "telemetry.enableTelemetry": false,
-  "files.autoSave": "afterDelay",
-  "files.autoSaveDelay": 10000
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact",
+    "vue-html": "html"
+  }
 }

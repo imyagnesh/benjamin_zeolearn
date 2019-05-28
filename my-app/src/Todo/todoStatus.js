@@ -2,9 +2,17 @@ import React from 'react';
 
 const todoStatus = () => {
   return (
-    <div>
-      <h1>Todo Status</h1>
-    </div>
+    <>
+      <button style={{ flex: 1, padding: 10 }} type="button">
+        All
+      </button>
+      <button style={{ flex: 1, padding: 10 }} type="button">
+        Pending
+      </button>
+      <button style={{ flex: 1, padding: 10 }} type="button">
+        Completed
+      </button>
+    </>
   );
 };
 
