@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import Form from '../../components/form';
+import { API } from '../../utils';
 
 const courseSchema = Yup.object().shape({
   title: Yup.string()
@@ -44,8 +45,21 @@ export default class index extends Component {
     history.goBack();
   };
 
-  onSubmit = values => {
-    console.log(values);
+  onSubmit = async (values, actions) => {
+    try {
+      await API({
+        uri: 'http://localhost:3004/courses',
+        method: 'POST',
+        header: {},
+        body: values,
+      });
+      actions.setSubmitting(false);
+      actions.resetForm();
+      this.goBack();
+    } catch (error) {
+      actions.setErrors({ general: 'Oops Something went wrong!!' });
+      actions.setSubmitting(false);
+    }
   };
 
   render() {

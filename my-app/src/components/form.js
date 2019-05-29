@@ -7,8 +7,9 @@ import Select from './select';
 const form = ({ formData, ...props }) => {
   return (
     <Formik {...props}>
-      {({ handleSubmit }) => (
+      {({ handleSubmit, isSubmitting, errors }) => (
         <form onSubmit={handleSubmit}>
+          {errors && errors.general && <span style={{ color: 'red' }}>{errors.general}</span>}
           {formData.map(item => (
             <Field
               key={item.name}
@@ -17,7 +18,9 @@ const form = ({ formData, ...props }) => {
             />
           ))}
 
-          <button type="submit">Add Todo</button>
+          <button type="submit" disabled={isSubmitting}>
+            Add Todo
+          </button>
         </form>
       )}
     </Formik>
