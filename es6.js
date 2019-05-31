@@ -627,3 +627,30 @@ const p2 = new Promise((resolve, reject) => {
 Promise.all([p1, p2])
   .then(x => console.log(x))
   .catch(x => console.log(x));
+
+
+const add = (a, b) => a + b;
+const sub = (a, b) => a - b;
+const multy = (a, b) => a * b;
+const devide = (a, b) => a / b;
+
+
+// const calc = (a, b, operation) => {
+//     if(operation === 'add') {
+//         return a + b
+//     }
+//     if(operation === 'sub') {
+//         return a - b
+//     }
+//     if(operation === 'multy') {
+//         return a * b
+//     }
+// }
+
+const calc = (a, b) => {
+    return (operation) => operation(a, b); 
+}
+
+// console.log(calc(1,2, 'add'));
+
+console.log(calc(1,2)(add))
