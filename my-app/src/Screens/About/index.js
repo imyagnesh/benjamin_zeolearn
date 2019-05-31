@@ -37,6 +37,7 @@ export default class index extends Component {
       }));
     this.state = {
       options,
+      initialValues: state.course,
     };
   }
 
@@ -47,9 +48,14 @@ export default class index extends Component {
 
   onSubmit = async (values, actions) => {
     try {
+      let uri = 'http://localhost:3004/courses';
+      if (values.id) {
+        uri = `http://localhost:3004/courses/${values.id}`;
+      }
+
       await API({
-        uri: 'http://localhost:3004/courses',
-        method: 'POST',
+        uri,
+        method: values.id ? 'PUT' : 'POST',
         header: {},
         body: values,
       });
@@ -63,7 +69,7 @@ export default class index extends Component {
   };
 
   render() {
-    const { options } = this.state;
+    const { options, initialValues } = this.state;
 
     const form = [
       {
@@ -101,15 +107,10 @@ export default class index extends Component {
           Go Back
         </button>
         <Form
-          initialValues={{
-            title: '',
-            watchHref: '',
-            length: '',
-            category: '',
-            authorId: '',
-          }}
+          initialValues={initialValues}
           validationSchema={courseSchema}
           onSubmit={this.onSubmit}
+          buttonText={initialValues.id ? 'Edit Course' : 'Add Course'}
           formData={form}
         />
       </div>

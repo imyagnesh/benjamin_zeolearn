@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 // import PropTypes from 'prop-types';
 import loadable from '@loadable/component';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
+import LocaleContext from './context/localeContext';
 import NoMatch from './Screens/NoMatch';
 // import Home from './Screens/Home';
 // import About from './Screens/About';
@@ -61,12 +62,14 @@ class App extends PureComponent {
               </li>
             </ul>
           </nav>
-          <Switch>
-            <Route path="/" exact component={HomeAsync} />
-            <Route path="/about/" component={AboutAsync} />
-            <PrivateRoute path="/users/" auth component={UsersAsync} />
-            <Route component={NoMatch} />
-          </Switch>
+          <LocaleContext>
+            <Switch>
+              <Route path="/" exact component={HomeAsync} />
+              <Route path="/about/" component={AboutAsync} />
+              <PrivateRoute path="/users/" auth component={UsersAsync} />
+              <Route component={NoMatch} />
+            </Switch>
+          </LocaleContext>
           <div>footer</div>
         </div>
       </Router>

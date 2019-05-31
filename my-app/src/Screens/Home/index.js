@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { API } from '../../utils';
 import CourseList from './courseList';
+import { LocaleConsumer } from '../../context/localeContext';
 
 export default class index extends Component {
   static propTypes = {
@@ -45,7 +46,42 @@ export default class index extends Component {
     const { history } = this.props;
     history.push({
       pathname: '/about',
-      state: { authors },
+      state: {
+        authors,
+        course: {
+          title: '',
+          watchHref: '',
+          length: '',
+          category: '',
+          authorId: '',
+        },
+      },
+    });
+  };
+
+  editRecord = course => {
+    const { authors } = this.state;
+    const { history } = this.props;
+    history.push({
+      pathname: '/about',
+      state: {
+        authors,
+        course,
+      },
+    });
+  };
+
+  deleteRecord = async course => {
+    await API({ uri: `http://localhost:3004/courses/${course.id}`, method: 'DELETE' });
+    // const { courses } = this.state;
+    // this.setState({
+    //   courses: courses.filter(x => x.id !== course.id),
+    // });
+
+    this.setState(state => {
+      return {
+        courses: state.courses.filter(x => x.id !== course.id),
+      };
     });
   };
 
@@ -62,10 +98,19 @@ export default class index extends Component {
     return (
       <div>
         <h1>Home Page</h1>
-        <button type="button" onClick={this.addTodo}>
-          Add Todo
-        </button>
-        <CourseList courses={courses} renderAuthor={this.renderAuthor} />
+        <LocaleConsumer>
+          {value => (
+            <button type="button" onClick={this.addTodo}>
+              {`Add Todo ${value.locale}`}
+            </button>
+          )}
+        </LocaleConsumer>
+        <CourseList
+          courses={courses}
+          renderAuthor={this.renderAuthor}
+          editRecord={this.editRecord}
+          deleteRecord={this.deleteRecord}
+        />
       </div>
     );
   }

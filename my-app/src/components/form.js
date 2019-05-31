@@ -4,7 +4,7 @@ import { Formik, Field } from 'formik';
 import InputText from './inputText';
 import Select from './select';
 
-const form = ({ formData, ...props }) => {
+const form = ({ formData, buttonText, ...props }) => {
   return (
     <Formik {...props}>
       {({ handleSubmit, isSubmitting, errors }) => (
@@ -19,7 +19,7 @@ const form = ({ formData, ...props }) => {
           ))}
 
           <button type="submit" disabled={isSubmitting}>
-            Add Todo
+            {buttonText}
           </button>
         </form>
       )}
@@ -29,6 +29,7 @@ const form = ({ formData, ...props }) => {
 
 form.propTypes = {
   formData: PropTypes.array.isRequired,
+  buttonText: PropTypes.string.isRequired,
 };
 
 export default form;
