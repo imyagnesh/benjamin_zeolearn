@@ -5,6 +5,7 @@ import loadable from '@loadable/component';
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
 import LocaleContext from './context/localeContext';
 import NoMatch from './Screens/NoMatch';
+import history from './history';
 // import Home from './Screens/Home';
 // import About from './Screens/About';
 // import About from './Screens/Users';
@@ -47,7 +48,7 @@ class App extends PureComponent {
 
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <div>
           <nav>
             <ul>

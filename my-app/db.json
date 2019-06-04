@@ -16,15 +16,12 @@
       "category": "Software Practices"
     },
     {
-      "title": "redux course",
-      "courseURL": "",
+      "title": "title",
+      "watchHref": "http://www.pluralsight.com/courses/react-flux-building-applications",
       "length": "5:08",
       "category": "react",
-      "country": "",
-      "state": "",
-      "watchHref": "www.google.com",
       "authorId": "scott-allen",
-      "id": "sSlJtpG"
+      "id": "jBTll7e"
     },
     {
       "title": "title",
@@ -32,15 +29,15 @@
       "length": "5:08",
       "category": "react",
       "authorId": "scott-allen",
-      "id": "vbOk_Fd"
+      "id": "iauVbiC"
     },
     {
-      "title": "title 112",
+      "title": "redux course",
       "watchHref": "http://www.pluralsight.com/courses/react-flux-building-applications",
       "length": "5:08",
       "category": "react",
       "authorId": "scott-allen",
-      "id": "6yuUNcX"
+      "id": "iMIwP82"
     }
   ],
   "authors": [

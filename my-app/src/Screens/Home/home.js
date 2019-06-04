@@ -1,111 +1,132 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { API } from '../../utils';
 import CourseList from './courseList';
 import { LocaleConsumer } from '../../context/localeContext';
+import About from '../About/about';
 
 export default class index extends Component {
   static propTypes = {
-    history: PropTypes.object.isRequired,
-    locale: PropTypes.string.isRequired,
-    changeLocale: PropTypes.func.isRequired,
+    // history: PropTypes.object.isRequired,
+    loadDataRequest: PropTypes.func.isRequired,
+    deleteCourseRequest: PropTypes.func.isRequired,
+    courses: PropTypes.object.isRequired,
+    authors: PropTypes.object.isRequired,
+    addCoursesRequest: PropTypes.func.isRequired,
   };
 
   state = {
-    courses: [],
-    authors: [],
-    loading: false,
-    error: false,
+    open: false,
+    formData: null,
   };
 
-  componentDidMount() {
-    this.fetchAPI();
+  constructor(props) {
+    super(props);
+    props.loadDataRequest();
   }
 
-  fetchAPI = async () => {
-    this.setState({ loading: true });
-    try {
-      const coursesAPI = API({ uri: 'http://localhost:3004/courses' });
-      const authorsAPI = API({ uri: 'http://localhost:3004/authors' });
-      const data = await Promise.all([coursesAPI, authorsAPI]);
-      this.setState({ courses: data[0], authors: data[1], loading: false });
-    } catch (error) {
-      this.setState({ loading: false, error: 'Oops! something went wrong' });
+  componentWillReceiveProps(nextProps) {
+    const { courses } = this.props;
+    if (nextProps.courses.loading !== courses.loading && nextProps.courses.loading === false) {
+      this.setState({ open: false });
     }
-  };
+  }
 
   renderAuthor = id => {
-    const { authors } = this.state;
-    const author = authors.find(x => x.id === id);
+    const {
+      authors: { data },
+    } = this.props;
+    const author = data.find(x => x.id === id);
     if (author) {
       return `${author.firstName} ${author.lastName}`;
     }
     return '';
   };
 
+  // componentDidUpdate(prevProps, prevState) {
+  //   const { courses } = this.props;
+  //   if (prevProps.courses.loading !== courses.loading && courses.loading === false) {
+  //     this.setState({ open: false });
+  //   }
+  // }
+
   addTodo = () => {
-    const { authors } = this.state;
-    const { history } = this.props;
-    history.push({
-      pathname: '/about',
-      state: {
-        authors,
-        course: {
-          title: '',
-          watchHref: '',
-          length: '',
-          category: '',
-          authorId: '',
-        },
+    this.setState({
+      open: true,
+      formData: {
+        title: '',
+        watchHref: '',
+        length: '',
+        category: '',
+        authorId: '',
       },
     });
+    // const {
+    //   authors: { data },
+    //   history,
+    // } = this.props;
+    // history.push({
+    //   pathname: '/about',
+    //   state: {
+    //     authors: data,
+    //     course: {
+    //       title: '',
+    //       watchHref: '',
+    //       length: '',
+    //       category: '',
+    //       authorId: '',
+    //     },
+    //   },
+    // });
   };
 
   editRecord = course => {
-    const { authors } = this.state;
-    const { history } = this.props;
-    history.push({
-      pathname: '/about',
-      state: {
-        authors,
-        course,
-      },
-    });
-  };
+    this.setState({ open: true, formData: course });
 
-  deleteRecord = async course => {
-    await API({ uri: `http://localhost:3004/courses/${course.id}`, method: 'DELETE' });
-    // const { courses } = this.state;
-    // this.setState({
-    //   courses: courses.filter(x => x.id !== course.id),
+    // const {
+    //   history,
+    //   authors: { data },
+    // } = this.props;
+    // history.push({
+    //   pathname: '/about',
+    //   state: {
+    //     authors: data,
+    //     course,
+    //   },
     // });
-
-    this.setState(state => {
-      return {
-        courses: state.courses.filter(x => x.id !== course.id),
-      };
-    });
   };
 
   render() {
-    const { courses, loading, error } = this.state;
-    const { locale, changeLocale } = this.props;
+    const {
+      courses: { loading, data, error },
+      authors: { data: authorData },
+      deleteCourseRequest,
+      addCoursesRequest,
+    } = this.props;
+    const { open, formData } = this.state;
 
-    console.log(locale);
+    let options = [];
+    options =
+      authorData &&
+      authorData.map(author => ({
+        value: author.id,
+        text: `${author.firstName} ${author.lastName}`,
+      }));
+
     if (loading) {
       return <h1>Loading...</h1>;
     }
 
-    if (error) {
-      return <h1>{error}</h1>;
-    }
+    // if (error) {
+    //   return <h1>{error}</h1>;
+    // }
 
     return (
       <div>
         <h1>Home Page</h1>
-        <button type="button" onClick={() => changeLocale('spanish')}>
+        {/* <button type="button" onClick={() => changeLocale('spanish')}>
           Change Locale
-        </button>
+        </button> */}
+        {error && <h1 style={{ color: 'red' }}>{error}</h1>}
         <LocaleConsumer>
           {value => (
             <button type="button" onClick={this.addTodo}>
@@ -115,11 +136,20 @@ export default class index extends Component {
         </LocaleConsumer>
 
         <CourseList
-          courses={courses}
+          courses={data}
           renderAuthor={this.renderAuthor}
           editRecord={this.editRecord}
-          deleteRecord={this.deleteRecord}
+          deleteRecord={deleteCourseRequest}
         />
+        <dialog open={open}>
+          {formData && (
+            <About
+              addCoursesRequest={addCoursesRequest}
+              initialValues={formData}
+              options={options}
+            />
+          )}
+        </dialog>
       </div>
     );
   }
