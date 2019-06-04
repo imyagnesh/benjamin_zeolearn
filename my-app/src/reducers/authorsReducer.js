@@ -1,19 +1,11 @@
-const initialState = {
-  loading: false,
-  data: [],
-  error: false,
-};
+import * as types from '../constants/actionTypes';
+
+const initialState = [];
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case 'LOAD_AUTHORS_REQUEST':
-      return { ...state, loading: true };
-
-    case 'LOAD_AUTHORS_SUCCESS':
-      return { ...state, loading: false, data: payload };
-
-    case 'LOAD_AUTHORS_FAIL':
-      return { ...state, loading: false, error: payload };
+    case `${types.LOAD}_${types.AUTHORS}_${types.SUCCESS}`:
+      return payload;
 
     default:
       return state;

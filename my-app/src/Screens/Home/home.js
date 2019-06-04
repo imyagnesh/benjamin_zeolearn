@@ -9,9 +9,12 @@ export default class index extends Component {
     // history: PropTypes.object.isRequired,
     loadDataRequest: PropTypes.func.isRequired,
     deleteCourseRequest: PropTypes.func.isRequired,
-    courses: PropTypes.object.isRequired,
-    authors: PropTypes.object.isRequired,
+    courses: PropTypes.array.isRequired,
+    authors: PropTypes.array.isRequired,
     addCoursesRequest: PropTypes.func.isRequired,
+    editCoursesRequest: PropTypes.func.isRequired,
+    loading: PropTypes.bool.isRequired,
+    error: PropTypes.string.isRequired,
   };
 
   state = {
@@ -25,17 +28,15 @@ export default class index extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { courses } = this.props;
-    if (nextProps.courses.loading !== courses.loading && nextProps.courses.loading === false) {
+    const { loading } = this.props;
+    if (nextProps.loading !== loading && nextProps.loading === false) {
       this.setState({ open: false });
     }
   }
 
   renderAuthor = id => {
-    const {
-      authors: { data },
-    } = this.props;
-    const author = data.find(x => x.id === id);
+    const { authors } = this.props;
+    const author = authors.find(x => x.id === id);
     if (author) {
       return `${author.firstName} ${author.lastName}`;
     }
@@ -97,17 +98,20 @@ export default class index extends Component {
 
   render() {
     const {
-      courses: { loading, data, error },
-      authors: { data: authorData },
+      courses,
+      authors,
+      loading,
+      error,
       deleteCourseRequest,
       addCoursesRequest,
+      editCoursesRequest,
     } = this.props;
     const { open, formData } = this.state;
 
     let options = [];
     options =
-      authorData &&
-      authorData.map(author => ({
+      authors &&
+      authors.map(author => ({
         value: author.id,
         text: `${author.firstName} ${author.lastName}`,
       }));
@@ -136,7 +140,7 @@ export default class index extends Component {
         </LocaleConsumer>
 
         <CourseList
-          courses={data}
+          courses={courses}
           renderAuthor={this.renderAuthor}
           editRecord={this.editRecord}
           deleteRecord={deleteCourseRequest}
@@ -144,7 +148,12 @@ export default class index extends Component {
         <dialog open={open}>
           {formData && (
             <About
-              addCoursesRequest={addCoursesRequest}
+              addCoursesRequest={(values, action) => {
+                if (formData.id) {
+                  editCoursesRequest(values, action);
+                }
+                addCoursesRequest(values, action);
+              }}
               initialValues={formData}
               options={options}
             />

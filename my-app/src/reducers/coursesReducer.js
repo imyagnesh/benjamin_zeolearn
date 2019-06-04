@@ -1,40 +1,25 @@
-const initialState = {
-  loading: false,
-  data: [],
-  error: false,
-};
+import * as types from '../constants/actionTypes';
+
+const initialState = [];
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case 'LOADING':
-      return { ...state, loading: true };
+    case `${types.LOAD}_${types.COURSES}_${types.SUCCESS}`:
+      return payload;
 
-    case 'ERROR':
-      return { ...state, loading: false, error: payload.message };
+    case `${types.SAVE}_${types.COURSES}_${types.SUCCESS}`:
+      return [...state, payload];
 
-    case 'LOAD_COURSES_SUCCESS':
-      return { ...state, loading: false, data: payload };
-
-    // case 'LOAD_COURSES_FAIL':
-    //   return { ...state, loading: false, error: payload };
-
-    case 'ADD_COURSE_SUCCESS':
-      return { ...state, loading: false, data: [...state.data, payload] };
-
-    case 'EDIT_COURSE_SUCCESS': {
-      const index = state.data.findIndex(x => x.id === payload.id);
-      const updateCourses = [
-        ...state.data.slice(0, index),
-        payload,
-        ...state.data.slice(index + 1),
-      ];
-      return { ...state, loading: false, data: updateCourses };
+    case `${types.EDIT}_${types.COURSES}_${types.SUCCESS}`: {
+      const index = state.findIndex(x => x.id === payload.id);
+      const updateCourses = [...state.slice(0, index), payload, ...state.slice(index + 1)];
+      return updateCourses;
     }
 
-    case 'DELETE_COURSES_SUCCESS':
-      return { ...state, loading: false, data: state.data.filter(x => x.id !== payload.id) };
+    case `${types.DELETE}_${types.COURSES}_${types.SUCCESS}`:
+      return state.filter(x => x.id !== payload.id);
 
-    case 'RESET_COURSES':
+    case `${types.RESET}_${types.COURSES}`:
       return initialState;
 
     default:

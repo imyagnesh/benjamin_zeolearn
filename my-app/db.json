@@ -11,7 +11,7 @@
       "id": "clean-code",
       "title": "Clean Code: Writing Code for Humans",
       "watchHref": "http://www.pluralsight.com/courses/writing-clean-code-humans",
-      "authorId": "scott-allen",
+      "authorId": "cory-house",
       "length": "3:10",
       "category": "Software Practices"
     },
@@ -21,23 +21,7 @@
       "length": "5:08",
       "category": "react",
       "authorId": "scott-allen",
-      "id": "jBTll7e"
-    },
-    {
-      "title": "title",
-      "watchHref": "http://www.pluralsight.com/courses/react-flux-building-applications",
-      "length": "5:08",
-      "category": "react",
-      "authorId": "scott-allen",
-      "id": "iauVbiC"
-    },
-    {
-      "title": "redux course",
-      "watchHref": "http://www.pluralsight.com/courses/react-flux-building-applications",
-      "length": "5:08",
-      "category": "react",
-      "authorId": "scott-allen",
-      "id": "iMIwP82"
+      "id": "9IHkxhs"
     }
   ],
   "authors": [
