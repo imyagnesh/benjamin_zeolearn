@@ -40,5 +40,31 @@
       "firstName": "Dan",
       "lastName": "Wahlin"
     }
+  ],
+  "items": [
+    {
+      "id": 1,
+      "name": "mobile",
+      "price": 10
+    },
+    {
+      "id": 2,
+      "name": "books",
+      "price": 10
+    }
+  ],
+  "cart": [
+    {
+      "id": 1,
+      "name": "mobile",
+      "price": 10,
+      "quantity": 36
+    },
+    {
+      "id": 2,
+      "name": "books",
+      "price": 10,
+      "quantity": 21
+    }
   ]
 }

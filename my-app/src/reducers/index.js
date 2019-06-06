@@ -4,6 +4,8 @@ import courses from './coursesReducer';
 import authors from './authorsReducer';
 import error from './errorReducer';
 import loading from './loadingReducer';
+import items from '../Screens/Users/itemsReducer';
+import cart from '../Screens/Users/cartReducer';
 
 export default combineReducers({
   locale,
@@ -11,4 +13,6 @@ export default combineReducers({
   authors,
   error,
   loading,
+  items,
+  cart,
 });

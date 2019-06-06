@@ -10,4 +10,5 @@ export const DELETE = 'DELETE';
 
 export const AUTHORS = 'AUTHORS';
 export const COURSES = 'COURSES';
+export const ITEMS = 'ITEMS';
 export const RATING = 'RATING';

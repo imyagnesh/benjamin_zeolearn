@@ -18,11 +18,11 @@ export const API = ({ uri, method = 'GET', header = {}, body = null }) => {
     try {
       const res = await fetch(uri, options);
       const json = await res.json();
-      if (method.toLowerCase() === 'post') {
-        reject(new Error('error'));
-      } else {
-        resolve(json);
-      }
+      // if (method.toLowerCase() === 'post') {
+      //   reject(new Error('error'));
+      // } else {
+      resolve(json);
+      // }
     } catch (error) {
       reject(error);
     }
