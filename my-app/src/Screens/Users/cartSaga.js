@@ -38,6 +38,18 @@ function* updateItemToCart({ payload }) {
   }
 }
 
+function* deleteItemFromCart({ payload }) {
+  try {
+    yield call(API, {
+      uri: `http://localhost:3004/cart/${payload.id}`,
+      method: 'DELETE',
+    });
+    yield put({ type: 'DELETE_ITEM_FROM_CART_SUCCESS', payload });
+  } catch (error) {
+    yield put({ type: 'DELETE_ITEM_FROM_CART_ERROR', payload: error });
+  }
+}
+
 function* loadCartRequest() {
   yield takeLatest('LOAD_CART_REQUEST', loadCart);
 }
@@ -50,6 +62,15 @@ function* updateItemToCartRequest() {
   yield takeEvery('UPDATE_ITEM_TO_CART_REQUEST', updateItemToCart);
 }
 
+function* deleteItemFromCartRequest() {
+  yield takeEvery('DELETE_ITEM_FROM_CART_REQUEST', deleteItemFromCart);
+}
+
 export default function* init() {
-  yield all([loadCartRequest(), addItemToCartRequest(), updateItemToCartRequest()]);
+  yield all([
+    loadCartRequest(),
+    addItemToCartRequest(),
+    updateItemToCartRequest(),
+    deleteItemFromCartRequest(),
+  ]);
 }

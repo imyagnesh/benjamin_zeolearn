@@ -13,6 +13,7 @@ const mapDispatchToProps = dispatch => ({
   loadCart: () => dispatch({ type: 'LOAD_CART_REQUEST' }),
   addToCart: item => dispatch({ type: 'ADD_ITEM_TO_CART_REQUEST', payload: item }),
   updateToCart: item => dispatch({ type: 'UPDATE_ITEM_TO_CART_REQUEST', payload: item }),
+  deleteFromCart: item => dispatch({ type: 'DELETE_ITEM_FROM_CART_REQUEST', payload: item }),
 });
 
 export default connect(

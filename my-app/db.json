@@ -55,12 +55,6 @@
   ],
   "cart": [
     {
-      "id": 1,
-      "name": "mobile",
-      "price": 10,
-      "quantity": 36
-    },
-    {
       "id": 2,
       "name": "books",
       "price": 10,

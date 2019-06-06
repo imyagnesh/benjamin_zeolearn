@@ -14,6 +14,9 @@ export default (state = initialState, { type, payload }) => {
       return updatedState;
     }
 
+    case 'DELETE_ITEM_FROM_CART_SUCCESS':
+      return state.filter(x => x.id !== payload.id);
+
     default:
       return state;
   }
