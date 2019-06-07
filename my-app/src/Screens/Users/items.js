@@ -39,7 +39,11 @@ export default class itemsPage extends Component {
     return (
       <div>
         <h1>Items</h1>
-        {!!error && <span style={{ color: 'red' }}>{error}</span>}
+        {!!error && (
+          <span className="error" style={{ color: 'red' }}>
+            {error}
+          </span>
+        )}
         <table>
           <thead>
             <tr>
@@ -49,7 +53,7 @@ export default class itemsPage extends Component {
             </tr>
           </thead>
           <tbody>
-            {items.map(item => {
+            {items.map((item, index) => {
               return (
                 <tr key={item.id}>
                   <td>{item.name}</td>
@@ -57,6 +61,7 @@ export default class itemsPage extends Component {
                   <td>
                     <div>
                       <button
+                        name={`btnAddToCart${index}`}
                         type="button"
                         onClick={() => {
                           const isItemExist = cart.find(x => x.id === item.id);
@@ -82,7 +87,7 @@ export default class itemsPage extends Component {
         {cart.length > 0 && (
           <div>
             <span>{`${cart.length} item(S) in your cart`}</span>
-            <button type="button" onClick={() => this.setState({ open: true })}>
+            <button id="viewButton" type="button" onClick={() => this.setState({ open: true })}>
               View
             </button>
           </div>
@@ -108,6 +113,7 @@ export default class itemsPage extends Component {
                     <td>
                       <div>
                         <button
+                          name="btnDeleteFromCart"
                           type="button"
                           onClick={() => {
                             deleteFromCart(item);

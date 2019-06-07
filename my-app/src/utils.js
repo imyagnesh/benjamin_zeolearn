@@ -1,6 +1,6 @@
 export const data = 1;
 
-export const API = ({ uri, method = 'GET', header = {}, body = null }) => {
+export const API = ({ uri, method = 'GET', header = {}, body = null, isFailed = false }) => {
   let options = {
     method,
     headers: {
@@ -21,7 +21,11 @@ export const API = ({ uri, method = 'GET', header = {}, body = null }) => {
       // if (method.toLowerCase() === 'post') {
       //   reject(new Error('error'));
       // } else {
-      resolve(json);
+      if (isFailed) {
+        reject(new Error('error'));
+      } else {
+        resolve(json);
+      }
       // }
     } catch (error) {
       reject(error);

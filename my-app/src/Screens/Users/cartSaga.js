@@ -1,7 +1,7 @@
 import { all, takeLatest, takeEvery, call, put } from 'redux-saga/effects';
 import { API } from '../../utils';
 
-function* loadCart() {
+export function* loadCart() {
   try {
     const cart = yield call(API, { uri: 'http://localhost:3004/cart' });
     yield put({ type: 'LOAD_CART_SUCCESS', payload: cart });
@@ -10,7 +10,7 @@ function* loadCart() {
   }
 }
 
-function* addItemToCart({ payload }) {
+export function* addItemToCart({ payload }) {
   try {
     const cartItem = yield call(API, {
       uri: 'http://localhost:3004/cart',
@@ -24,7 +24,7 @@ function* addItemToCart({ payload }) {
   }
 }
 
-function* updateItemToCart({ payload }) {
+export function* updateItemToCart({ payload }) {
   try {
     const cartItem = yield call(API, {
       uri: `http://localhost:3004/cart/${payload.id}`,
@@ -38,7 +38,7 @@ function* updateItemToCart({ payload }) {
   }
 }
 
-function* deleteItemFromCart({ payload }) {
+export function* deleteItemFromCart({ payload }) {
   try {
     yield call(API, {
       uri: `http://localhost:3004/cart/${payload.id}`,
