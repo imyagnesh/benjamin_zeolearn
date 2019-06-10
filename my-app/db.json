@@ -59,6 +59,12 @@
       "name": "books",
       "price": 10,
       "quantity": 21
+    },
+    {
+      "id": 1,
+      "name": "mobile",
+      "price": 10,
+      "quantity": 1
     }
   ]
 }

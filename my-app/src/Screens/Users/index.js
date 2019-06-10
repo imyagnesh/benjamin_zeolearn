@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import items from './items';
+import { loadItems } from '../../actions/itemsActions';
 
 const mapStateToProps = state => ({
   items: state.items,
@@ -9,7 +10,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  loadItems: () => dispatch({ type: 'LOAD_ITEMS_REQUEST' }),
+  loadItems: () => loadItems()(dispatch),
   loadCart: () => dispatch({ type: 'LOAD_CART_REQUEST' }),
   addToCart: item => dispatch({ type: 'ADD_ITEM_TO_CART_REQUEST', payload: item }),
   updateToCart: item => dispatch({ type: 'UPDATE_ITEM_TO_CART_REQUEST', payload: item }),
